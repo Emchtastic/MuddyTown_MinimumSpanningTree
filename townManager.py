@@ -1,19 +1,18 @@
-import random
-class Street:
-    def __init__(self, weight, house1, house2):
-        self.weight = weight
-        self.house1 = house1
-        self.house2 = house2
 
+import Street, Town, House, random
 
-class Town:
-    def __init__(self, name, houses):
-        self.name = name
-        self.houses = houses
-        self.streets = []
+town = Town.Town("", 0)
+s=0
 
+def randomNumber():
+    a = 11
+    c = 17
+    m = 25
+    global s
 
-town = Town("", 0)
+    s = (a * s + c) % m
+    
+    return s
 
 
 def createFile(name):
@@ -32,13 +31,22 @@ def readFile(name):
             break
         var = line.split(',', -1)
 
-        street = Street(var[0], var[1], var[2])
+        street = Street.Street(var[0], var[1], var[2])
         town.streets.append(street)
 
 
 def generateTown():
-    return
+    streetNames = [str]
+    randomNumbers = [int]
+    file = open("names.txt", "r")
+    for line in file:
+        streetNames.append(line)
+    
+    for i in range(100):
+        num = randomNumber()
+        randomNumbers.append(num)
 
+    
 
 if __name__ == '__main__':
     createFile("test.txt")
@@ -47,5 +55,6 @@ if __name__ == '__main__':
     print(town.name)
     for street in town.streets:
         print(street.weight)
-        generateTown()
         print(street.house1 + " " + street.house2)
+        generateTown()
+
