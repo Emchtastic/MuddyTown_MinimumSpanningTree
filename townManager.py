@@ -1,5 +1,5 @@
 
-import Street, Town, House, random
+import Street, Town, House, random, re
 
 town = Town.Town("", 0)
 s=0
@@ -18,9 +18,9 @@ def randomNumber():
 def createFile(name):
     file = open(name, "w")
     file.write("Hobbsville\n" +
-               "3,1 First Street,2 First Street\n" +
-               "2,1 Second Street,1 First Street\n" +
-               "2,2 First Street,2 Second Street")
+               '3, "1 First Street", "2 First Street"\n' +
+               '2, "1 Second Street", "1 First Street"\n' +
+               '2, "2 First Street", "2 Second Street"')
 
 
 def readFile(name):
@@ -29,9 +29,9 @@ def readFile(name):
     for line in file:
         if not line:
             break
-        var = line.split(',', -1)
+        var = re.split('; |, |\*|\n', line)
 
-        street = Street.Street(var[0], var[1], var[2])
+        street = Street.Street(var[0], var[1].replace('"',""), var[2].replace('"',""))
         town.streets.append(street)
 
 
@@ -54,7 +54,6 @@ if __name__ == '__main__':
 
     print(town.name)
     for street in town.streets:
-        print(street.weight)
-        print(street.house1 + " " + street.house2)
+        print(street.weight + " " + street.house1 + " " + street.house2)
         generateTown()
 
