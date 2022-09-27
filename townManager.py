@@ -112,7 +112,6 @@ def writePavingPlan(pavingPlan=[], isMST=False):
 
             yes = input("Add another street? (y/n)")
 
-
 def printTown(town):
     print(town.name)
     for street in town.streets:
@@ -151,10 +150,13 @@ If called by checkPavingPlan, then return streets, house names, and plan cost"""
 def readPavingPlan(town, readForCheck=False):
     planStreets = []
     planHouses = []
+    plan = []
     totalCost = 0
     filename = input("Enter file name with paving plan")
     file = open(filename, "r")
-    print("Reading paving plan titled: " + file.readline().rstrip("\n"))
+    planName = file.readline()
+    plan.append(planName)
+    print("Reading paving plan titled: " + planName.rstrip("\n"))
 
     for line in file:
         if not line:
@@ -162,6 +164,7 @@ def readPavingPlan(town, readForCheck=False):
         var = re.split('; |, |\*|\n', line)
         house1 = var[0].replace('"', "")
         house2 = var[1].replace('"', "")
+        plan.append(house1+", "+house2)
         if town.numHouses != 0:
             print(house1 + ", " + house2)
 
@@ -179,9 +182,36 @@ def readPavingPlan(town, readForCheck=False):
                   "\nPlease upload town data that coincides with paving plan")
             if readForCheck:
                 return None, None
-    print("Total cost of " + filename + ": " + str(totalCost))
+            else:
+                return
+    print("Total cost of stored plan: " + str(totalCost))
     if readForCheck:
         return planStreets, planHouses, totalCost
+    return plan
+
+
+def readCurrentPlan(plan, town):
+    totalCost = 0
+    planName = str(plan[0]).replace("\n", "")
+    for street in plan:
+        var = re.split('; |, |\*|\n', street)
+        if planName in var:
+            pass
+        house1 = var[0].replace('"', "")
+        house2 = var[1].replace('"', "")
+        if town.numHouses != 0:
+            print(house1 + ", " + house2)
+            for street in town.streets:
+                if house1 == street.house1 and house2 == street.house2:
+                    totalCost += street.weight
+                    break
+        else:
+            print("Town data not stored to compare paving plan to."
+                  "\nPlease upload town data that coincides with paving plan")
+            return
+
+    print("Total cost of " + planName + ": " + str(totalCost))
+
 
 
 """Utilizes readPavingPlan() to get cost and plan data. Then passes plan data to Prim's for coverage check which is followed by a min cost check"""

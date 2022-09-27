@@ -23,3 +23,5 @@ Python Classes:
 
 Other files:
 -houseNames.txt: A large list of random street names that this program utilizes to randomly create house names
+-planB.txt & planC.txt: two test case paving plans to test reading, storing, and checking
+-town.txt: test case town to check against planC and planB
