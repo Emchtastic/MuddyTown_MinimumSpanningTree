@@ -1,11 +1,13 @@
 from sys import maxsize
-INT_MAX = maxsize
+import townManager
+
+maxPlaceholder = maxsize
 
 '''
 This returns true if either u or v is in the MST and the other is not. i.e. Has one house been paved to while 
 the other is not connected.
 '''
-def isValidEdge(u, v, inMST):
+def validEdge(u, v, inMST):
     if u == v:
         return False
     if inMST[u] == False and inMST[v] == False:
@@ -14,12 +16,19 @@ def isValidEdge(u, v, inMST):
         return False
     return True
 
+"""
+Graph adjacency matrix that holds all the paving costs for connected houses
+"""
 class Graph():
 
     def __init__(self, houses):
         self.houses = houses
-        self.graph = [[INT_MAX for column in range(houses)]
+        self.graph = [[maxPlaceholder for column in range(houses)]
                       for row in range(houses)]
+
+    def createGraph(self, houses, streets):
+        for street in streets:
+            self.addEdge(street.house1, street.house2, street.weight, houses)
 
     def addEdge(self, v1, v2, e, vertices):
         index1 = vertices.index(v1)
@@ -27,37 +36,57 @@ class Graph():
         self.graph[index1][index2] = e
         self.graph[index2][index1] = e
 
-    def primMST(self, numHouses, houseNames):
-        pavePlan = ["MT Plan A"]
-        inMST = [False] * numHouses
-        # Include first vertex in MST
-        inMST[0] = True
+    """
+    Method to determine the minimum cost to pave to every house in a town. Utilizes Prim's algorithm for greedy traversal through the adjacency matrix
+    """
+    def primTree(self, numHouses, houseNames, townHouses=[], checkPlan=False):
+        if checkPlan:
+            pavedHouses = townHouses
+        pavePlan = []
+        connectedTree = [False] * numHouses
+        # Start with first house in connectedTree
+        connectedTree[0] = True
 
-        # Keep adding edges while number of included edges does not become numHouses-1.
-        edge_count = 0
-        mincost = 0
-        while edge_count < numHouses - 1:
-
-            # Find minimum cost edge.
-            minimumCost = INT_MAX
+        # Add edges while greater than numHouses-1.
+        edges = 0
+        planMinCost = 0
+        while edges < numHouses - 1:
+            minimumCost = maxPlaceholder
             a = -1
             b = -1
             for i in range(numHouses):
                 for j in range(numHouses):
                     if self.graph[i][j] < minimumCost and \
-                            isValidEdge(i, j, inMST):
+                            validEdge(i, j, connectedTree):
                         minimumCost = self.graph[i][j]
                         a = i
                         b = j
 
             if a != -1 and b != -1:
                 pavePlan.append('"' + houseNames[a] + '"' + ", " + '"' + houseNames[b] + '"')
-                print("Edge %d: (%s, %s) cost: %d" %
-                      (edge_count, houseNames[a], houseNames[b], minimumCost))
-                edge_count += 1
-                mincost += minimumCost
-                inMST[b] = inMST[a] = True
+                if not checkPlan:
+                    print("%s, %s" %
+                          (houseNames[a], houseNames[b]))
+                edges += 1
+                planMinCost += minimumCost
+                connectedTree[b] = connectedTree[a] = True
+                if checkPlan:
+                    for house in pavedHouses:
+                        if house[0] == houseNames[a] or house[0] == houseNames[b]:
+                            house[1] = True
 
-        print("Minimum cost = %d" % mincost)
-        return pavePlan
+        if checkPlan:
+            for house in pavedHouses:
+                if house[1] == False:
+                    print("This plan DOES NOT cover all houses")
+                    return
+            print("This plan DOES cover all houses")
+
+        else:
+            print("Minimum cost = %d" % planMinCost)
+            townManager.minimumCost = planMinCost
+            writeInput = input("Would you like to write this plan to file? (y/n)")
+            if writeInput == 'y':
+                townManager.writePavingPlan(pavePlan, True)
+
 

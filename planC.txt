@@ -1,0 +1,6 @@
+Plan C
+"house1", "house4"
+"house3", "house4"
+"house1", "house5"
+"house1", "house2"
+"house2", "house6"
