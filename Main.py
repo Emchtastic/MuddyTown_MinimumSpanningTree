@@ -4,10 +4,15 @@ import townManager
 import sys
 
 town = Town()
+townManager.readTown(town, "MiniTown.txt")
 currentPavingPlan = []
 
 if __name__ == '__main__':
-    print(sys.version)
+    if len(sys.argv) < 2:
+        townManager.printTown(town)
+    else:
+        print("two")
+    """
     print("Welcome to the MuddyTown manager")
     repeat = 'y'
     while repeat == 'y':
@@ -49,4 +54,4 @@ if __name__ == '__main__':
 
         repeat = input("Would you like to return to the menu? (y/n)")
 
-    print("Goodbye!")
+    """

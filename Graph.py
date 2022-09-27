@@ -85,8 +85,5 @@ class Graph():
         else:
             print("Minimum cost = %d" % planMinCost)
             townManager.minimumCost = planMinCost
-            writeInput = input("Would you like to write this plan to file? (y/n)")
-            if writeInput == 'y':
-                townManager.writePavingPlan(pavePlan, True)
 
 

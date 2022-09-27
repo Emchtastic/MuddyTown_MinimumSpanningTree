@@ -85,8 +85,8 @@ def compareNumGenerators():
 """Street values from passed town object are written to file"""
 
 
-def writeTown(town):
-    file = open(input("Enter a name for the file to be written to"), "w")
+def writeTown(town, file):
+    file = open(file, "w")
     file.write(town.name + "\n")
     for street in town.streets:
         file.write(str(street.weight) + ', "' + street.house1 + '",' + ' "' + street.house2 + '"\n')
@@ -96,9 +96,9 @@ def writeTown(town):
 If the paving plan is coming from Prim's, write the passed street values to write. Else, write user input to file.
 """
 
-
-def writePavingPlan(pavingPlan=[], isMST=False):
-    file = open(input("Enter the name of the file to write to: "), "w")
+# TODO change inputs
+def writePavingPlan(file, pavingPlan=[], isMST=False):
+    file = open(file, "w")
     file.write(input("Enter the name of the paving plan") + "\n")
     if isMST:
         for street in pavingPlan:
@@ -113,18 +113,18 @@ def writePavingPlan(pavingPlan=[], isMST=False):
             yes = input("Add another street? (y/n)")
 
 def printTown(town):
-    print(town.name)
+    print("\""+town.name+"\"")
     for street in town.streets:
-        print(str(street.weight) + ", " + street.house1 + ", " + street.house2)
+        print(str(street.weight) + ",\"" + street.house1 + "\",\"" + street.house2 + "\"")
 
 
 """Reads town data from file line by line. Splits line into cost, house1, and house2 to be stored as streets in town data"""
 
 
-def readTown(town):
+def readTown(town, file):
     town.townReset()
     houses = []
-    file = open(input("Enter name of town file to read: "), "r")
+    file = open(file, "r")
     town.name = file.readline().replace("\n", "")
     for line in file:
         if not line:
@@ -139,7 +139,6 @@ def readTown(town):
             houses.append(street.house2)
         town.houses = houses
         town.numHouses = len(houses)
-    print(town.name + " has been uploaded and stored")
     return town
 
 
@@ -147,13 +146,12 @@ def readTown(town):
 If called by checkPavingPlan, then return streets, house names, and plan cost"""
 
 
-def readPavingPlan(town, readForCheck=False):
+def readPavingPlan(town, file, readForCheck=False):
     planStreets = []
     planHouses = []
     plan = []
     totalCost = 0
-    filename = input("Enter file name with paving plan")
-    file = open(filename, "r")
+    file = open(file, "r")
     planName = file.readline()
     plan.append(planName)
     print("Reading paving plan titled: " + planName.rstrip("\n"))
@@ -241,13 +239,13 @@ def checkPavingPlan(town):
 Returns new Town """
 
 
-def generateTown():
-    town = Town()
-    town.name = input("Please enter a name for the new town")
-    randomNumbers = []
-    houses = []
+def generateTown(name):
     roadType = ["St", "Ct", "Ave", "Ln", "Dr", "Way"]
     houseNames = open("houseNames.txt").read().splitlines()
+    town = Town()
+    town.name = random.choice(houseNames) + " Town"
+    randomNumbers = []
+    houses = []
 
     # Populate random number list with random numbers
     for i in range(100):

@@ -1,8 +1,0 @@
-TinyVille
-42, "house1", "house2"
-23, "house1", "house3"
-17, "house1", "house4"
-40, "house1", "house5"
-2, "house2", "house6"
-55, "house2", "house3"
-13, "house3", "house4"
