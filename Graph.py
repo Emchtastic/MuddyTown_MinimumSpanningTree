@@ -39,7 +39,7 @@ class Graph():
     """
     Method to determine the minimum cost to pave to every house in a town. Utilizes Prim's algorithm for greedy traversal through the adjacency matrix
     """
-    def primTree(self, numHouses, houseNames, townHouses=[], checkPlan=False):
+    def primTree(self, numHouses, houseNames, planFileName, townHouses=[], checkPlan=False):
         if checkPlan:
             pavedHouses = townHouses
         pavePlan = []
@@ -64,9 +64,6 @@ class Graph():
 
             if a != -1 and b != -1:
                 pavePlan.append('"' + houseNames[a] + '"' + ", " + '"' + houseNames[b] + '"')
-                if not checkPlan:
-                    print("%s, %s" %
-                          (houseNames[a], houseNames[b]))
                 edges += 1
                 planMinCost += minimumCost
                 connectedTree[b] = connectedTree[a] = True
@@ -78,12 +75,12 @@ class Graph():
         if checkPlan:
             for house in pavedHouses:
                 if house[1] == False:
-                    print("This plan DOES NOT cover all houses")
+                    print("Connected = no")
                     return
-            print("This plan DOES cover all houses")
+            print("Connected = yes")
 
         else:
-            print("Minimum cost = %d" % planMinCost)
             townManager.minimumCost = planMinCost
+            townManager.writePavingPlan(planFileName, str(planFileName).replace(".txt", ""), pavePlan)
 
 

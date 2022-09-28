@@ -1,0 +1,11 @@
+planX
+"5269 Osman Dr", "2393 Fountainside St"
+"2393 Fountainside St", "5627 Odegard Ct"
+"7881 Regents Ct", "5627 Odegard Ct"
+"4828 Oakes Ct", "7881 Regents Ct"
+"7881 Regents Ct", "9736 Pond view Way"
+"7881 Regents Ct", "6758 Odegard Way"
+"5627 Odegard Ct", "3539 Woodbend St"
+"4828 Oakes Ct", "636 Edgewood Ln"
+"636 Edgewood Ln", "8874 Captains Ct"
+"636 Edgewood Ln", "1386 Mac Ln"

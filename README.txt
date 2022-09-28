@@ -5,8 +5,7 @@ Project: Muddy Town
 Scope: This program writes/reads town and paving data to be analyzed for connectivity, paving coverage, and paving cost
 
 How to use:
-Main.py - This class is the driver for the program. There is a menu to choose options that address each objective for
-the project. A Town object is instantiated here and passed to methods within townManager.py and Graph.py
+processtown.py - This class is the driver for the program.
 
 Python Classes:
 -Town.py: This is an object class used to construct town objects. This object keeps track of the streets in the town as well as house names
