@@ -1,7 +1,2 @@
-Bad Plan
-house1, house4
-house3, house4
-house1, house5
-house1, house2
-house2, house6
-house1, house3
+"PlanB"
+"1 First Street","2 First Street"

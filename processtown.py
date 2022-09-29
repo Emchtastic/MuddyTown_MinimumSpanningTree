@@ -15,10 +15,14 @@ if __name__ == '__main__':
         graph = Graph(town.numHouses)
         graph.createGraph(town.houses, town.streets)
         graph.primTree(town.numHouses, town.houses, fileName)
+        currentPavingPlan = townManager.readPavingPlan(town, fileName)
+        townManager.writePavingPlan("newPlan.txt", currentPavingPlan[0], currentPavingPlan)
+        townManager.printPavingPlan(currentPavingPlan, town)
+        townManager.checkPavingPlan(town, "planB.txt")
     else:
         argv = sys.argv[1:]
         try:
-            opts, args = getopt.gnu_getopt(argv, "csr:w:e:p:zx:h")
+            opts, args = getopt.gnu_getopt(argv, "csar:w:e:p:zx:hu:")
 
         except:
             print("Error")
@@ -29,6 +33,8 @@ if __name__ == '__main__':
                     town = townManager.generateTown()
                 case '-s':                              # Display town in standard format
                     townManager.printTown(town)
+                case '-a':                              # Display town in alternate format
+                    townManager.printTown(town, 2)
                 case '-z':                              # Display current paving plan stored
                     if not currentPavingPlan:
                         print("No current paving plan uploaded")
@@ -46,6 +52,9 @@ if __name__ == '__main__':
                 case '-x':                              # Read a paving plan from file and store
                     fileName = arg
                     currentPavingPlan = townManager.readPavingPlan(town, fileName)
+                case '-u':                              # Write current paving plan to file pavingplanfile
+                    fileName = arg
+                    townManager.writePavingPlan(fileName, currentPavingPlan[0], currentPavingPlan)
                 case '-p':                              # Write an optimal cost paving plan for the current town to file pavingplanfile
                     fileName = arg
                     graph = Graph(town.numHouses)
@@ -62,49 +71,18 @@ if __name__ == '__main__':
                     print("       w   write current town to file identified by parameter\n")
                     print("       v   show version\n")
                     print("       h   help (this display)\n")
-            """
-            
-            if opt in ['-c']:       # Generate random town
-                town = townManager.generateTown()
-            elif opt in ['-s']:     # Display town in standard format
-                townManager.printTown(town)
-            elif opt in ['-z']:     # Display current paving plan stored
-                if not currentPavingPlan:
-                    print("No current paving plan uploaded")
-                else:
-                    townManager.printPavingPlan(currentPavingPlan, town)
-            elif opt in ['-r']:     # Replace current town with data read from file
-                fileName = arg
-                townManager.readTown(town, fileName)
-            elif opt in ['-w']:     # Write current town data to file towndatafile using the standard format
-                fileName = arg
-                townManager.writeTown(town, fileName)
-            elif opt in ['-e']:     # Read and evaluate a paving plan for the current town from file pavingplanfile
-                fileName = arg
-                townManager.checkPavingPlan(town, fileName)
-            elif opt in ['-x']:     # Read a paving plan from file and store
-                fileName = arg
-                currentPavingPlan = townManager.readPavingPlan(town, fileName)
-            elif opt in ['-p']:     # Write an optimal cost paving plan for the current town to file pavingplanfile
-                fileName = arg
-                graph = Graph(town.numHouses)
-                graph.createGraph(town.houses, town.streets)
-                graph.primTree(town.numHouses, town.houses, fileName)
-            elif opt in ['-h']:     # Show help
-                fileName = arg
-                currentPavingPlan = townManager.readPavingPlan(town, fileName)
-            """
+
     """
     print("Welcome to the MuddyTown manager")
     repeat = 'y'
     while repeat == 'y':
         answer = int(input("Enter the option (number) that you want to execute:\n"
-                           "1: Generate new town\n"
-                           "2: Read town from a file to store internally\n"
-                           "3: Write stored town data to file\n"
-                           "4: Display stored town data\n"
-                           "5: Read a paving plan from file\n"
-                           "6: Display currently stored paving plan\n"
+                           "1: Generate new town\n"#
+                           "2: Read town from a file to store internally\n"#
+                           "3: Write stored town data to file\n"#
+                           "4: Display stored town data\n"#
+                           "5: Read a paving plan from file\n"#
+                           "6: Display currently stored paving plan\n"#
                            "7: Write paving plan to file\n"
                            "8: Check if a paving plan satisfies paving coverage and meets the minimum paving cost\n"
                            "9: Create a minimum cost paving plan for the currently store town\n"

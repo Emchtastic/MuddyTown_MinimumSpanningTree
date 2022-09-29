@@ -43,6 +43,7 @@ class Graph():
         if checkPlan:
             pavedHouses = townHouses
         pavePlan = []
+        pavePlan.append(str(planFileName).replace(".txt", ""))
         connectedTree = [False] * numHouses
         # Start with first house in connectedTree
         connectedTree[0] = True
@@ -63,7 +64,7 @@ class Graph():
                         b = j
 
             if a != -1 and b != -1:
-                pavePlan.append('"' + houseNames[a] + '"' + ", " + '"' + houseNames[b] + '"')
+                pavePlan.append('"' + houseNames[a] + '"' + "," + '"' + houseNames[b] + '"')
                 edges += 1
                 planMinCost += minimumCost
                 connectedTree[b] = connectedTree[a] = True
@@ -81,6 +82,6 @@ class Graph():
 
         else:
             townManager.minimumCost = planMinCost
-            townManager.writePavingPlan(planFileName, str(planFileName).replace(".txt", ""), pavePlan)
+            townManager.writePavingPlan(planFileName, pavePlan[0], pavePlan)
 
 
