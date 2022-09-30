@@ -1,5 +1,10 @@
 import random
 
+"""
+Class that holds all house/building data for later list and graph iteration. All houses are setup with a random number of 2-4 neighbors max.
+"""
+
+
 class House:
     def __init__(self, name):
         self.name = name

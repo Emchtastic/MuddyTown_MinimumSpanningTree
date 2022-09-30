@@ -4,21 +4,26 @@ import townManager
 maxPlaceholder = maxsize
 
 '''
-This returns true if either u or v is in the MST and the other is not. i.e. Has one house been paved to while 
-the other is not connected.
+This returns true if either u or v is in the MST and the other is not. i.e. To be True one house must been paved to while 
+the other has not. Ensure no house islands!
 '''
-def validEdge(u, v, inMST):
-    if u == v:
+
+
+def validEdge(h1, h2, paved):
+    if h1 == h2:
         return False
-    if inMST[u] == False and inMST[v] == False:
+    if paved[h1] is False and paved[h2] is False:
         return False
-    elif inMST[u] == True and inMST[v] == True:
+    elif paved[h1] is True and paved[h2] is True:
         return False
     return True
+
 
 """
 Graph adjacency matrix that holds all the paving costs for connected houses
 """
+
+
 class Graph():
 
     def __init__(self, houses):
@@ -28,7 +33,11 @@ class Graph():
 
     def createGraph(self, houses, streets):
         for street in streets:
-            self.addEdge(street.house1, street.house2, street.weight, houses)
+            self.addEdge(street.house1, street.house2, street.cost, houses)
+
+    """
+    Adds cost of paving between houses to adjacency matrix
+    """
 
     def addEdge(self, v1, v2, e, vertices):
         index1 = vertices.index(v1)
@@ -39,6 +48,7 @@ class Graph():
     """
     Method to determine the minimum cost to pave to every house in a town. Utilizes Prim's algorithm for greedy traversal through the adjacency matrix
     """
+
     def primTree(self, numHouses, houseNames, planFileName, townHouses=[], checkPlan=False):
         if checkPlan:
             pavedHouses = townHouses
@@ -75,7 +85,7 @@ class Graph():
 
         if checkPlan:
             for house in pavedHouses:
-                if house[1] == False:
+                if house[1] is False:
                     print("Connected = no")
                     return False
             print("Connected = yes")
@@ -84,5 +94,3 @@ class Graph():
         else:
             townManager.minimumCost = planMinCost
             townManager.writePavingPlan(planFileName, pavePlan[0], pavePlan)
-
-

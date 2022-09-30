@@ -1,11 +1,12 @@
-import random, re
+import random
+import re
 import time
 
 from Street import Street
 from House import House
 from Town import Town
 
-minimumCost = 5 #starting minimum for MiniTown
+minimumCost = 5  # starting minimum for MiniTown
 s = 0
 standardFormat = True
 
@@ -83,7 +84,7 @@ def compareNumGenerators():
         j += 1
 
 
-"""Street values from passed town object are written to file"""
+"""Street values from passed town object and written to file. Standard format depends on last used format, i.e. what format was read in last"""
 
 
 def writeTown(town, file):
@@ -91,7 +92,7 @@ def writeTown(town, file):
     if standardFormat:
         file.write("\"" + town.name + "\"" + "\n")
         for street in town.streets:
-            file.write(str(street.weight) + ',"' + street.house1 + '",' + '"' + street.house2 + '"\n')
+            file.write(str(street.cost) + ',"' + street.house1 + '",' + '"' + street.house2 + '"\n')
     else:
         file.write("Name: " + town.name.replace("\"", "") + "\n")
         file.write("Number of Buildings: " + str(town.numHouses) + "\n")
@@ -102,11 +103,13 @@ def writeTown(town, file):
         file.write("=====" + "\n")
         file.write(str(town.numHouses) + " " + str(len(town.streets)) + "\n")
         for street in town.streets:
-            file.write(str(town.houses.index(street.house1)+1) + " " + str(town.houses.index(street.house2)+1) + " " + str(street.weight) + "\n")
+            file.write(
+                str(town.houses.index(street.house1) + 1) + " " + str(town.houses.index(street.house2) + 1) + " " + str(
+                    street.cost) + "\n")
 
 
 """
-If the paving plan is coming from Prim's, write the passed street values to write. Else, write user input to file.
+If the paving plan is coming from Prim's, write the passed street values to write.
 """
 
 
@@ -117,22 +120,27 @@ def writePavingPlan(file, planName, pavingPlan):
         file.write(street + "\n")
 
 
+"""
+Displays town in either standard or alternative format. O(s+b) for alternative, O(s) for standard.
+"""
+
+
 def printTown(town, printFormat=1):
     match printFormat:
         case 1:
             print("\"" + town.name + "\"")
             for street in town.streets:
-                print(str(street.weight) + ",\"" + street.house1 + "\",\"" + street.house2 + "\"")
+                print(str(street.cost) + ",\"" + street.house1 + "\",\"" + street.house2 + "\"")
         case 2:
             print("Name: " + town.name.replace("\"", "") + "\n"
-                                         "Number of Buildings: " + str(town.numHouses))
+                                                           "Number of Buildings: " + str(town.numHouses))
             for house in town.houses:
                 print("[" + str(town.houses.index(house) + 1) + "] " + house)
             print("=====\n" +
                   str(town.numHouses) + " " + str(len(town.streets)))
             for street in town.streets:
                 print(str(town.houses.index(street.house1) + 1) + " " + str(
-                    town.houses.index(street.house2) + 1) + " " + str(street.weight))
+                    town.houses.index(street.house2) + 1) + " " + str(street.cost))
 
 
 """Reads town data from file line by line. Splits line into cost, house1, and house2 to be stored as streets in town 
@@ -186,6 +194,11 @@ def readTown(town, file):
     return town
 
 
+"""
+For each line in file, print the houses and find the correlating cost for the street to add up the total cost. O(s)
+"""
+
+
 def printPavingPlan(plan, town):
     totalCost = 0
     print(plan[0].rstrip("\n"))
@@ -197,7 +210,7 @@ def printPavingPlan(plan, town):
         for street in town.streets:
             if (house1 == street.house1 and house2 == street.house2) or (
                     house1 == street.house2 and house2 == street.house1):
-                totalCost += street.weight
+                totalCost += street.cost
     print("Total cost = " + str(totalCost))
 
 
@@ -229,8 +242,8 @@ def readPavingPlan(town, file, readForCheck=False):
         for street in town.streets:
             if (house1 == street.house1 and house2 == street.house2) or (
                     house1 == street.house2 and house2 == street.house1):
-                planStreets.append(Street(street.weight, house1, house2))
-                totalCost += street.weight
+                planStreets.append(Street(street.cost, house1, house2))
+                totalCost += street.cost
                 break
         if (len(planStreets)) == 0:
             print("Town data not stored to compare paving plan to."
@@ -246,6 +259,11 @@ def readPavingPlan(town, file, readForCheck=False):
     return plan
 
 
+"""
+Reads current plan stored from file.
+"""
+
+
 def readCurrentPlan(plan, town):
     totalCost = 0
     planName = str(plan[0]).replace("\n", "")
@@ -259,7 +277,7 @@ def readCurrentPlan(plan, town):
             print(house1 + ", " + house2)
             for street in town.streets:
                 if house1 == street.house1 and house2 == street.house2:
-                    totalCost += street.weight
+                    totalCost += street.cost
                     break
         else:
             print("Town data not stored to compare paving plan to."
@@ -281,7 +299,7 @@ def checkPavingPlan(town, file):
         from Graph import Graph
         planGraph = Graph(len(planHouses))
         for street in planStreets:
-            planGraph.addEdge(street.house1, street.house2, street.weight, planHouses)
+            planGraph.addEdge(street.house1, street.house2, street.cost, planHouses)
         connected = planGraph.primTree(len(planHouses), planHouses, file, townHouses, True)
         if minimumCost is None:
             print(

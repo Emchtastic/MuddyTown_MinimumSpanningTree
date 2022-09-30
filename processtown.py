@@ -11,7 +11,6 @@ town = Town()
 townManager.readTown(town, "MiniTown.txt")
 currentPavingPlan = []
 
-
 if __name__ == '__main__':
     if len(sys.argv) < 2:
         townManager.printTown(town)
@@ -22,11 +21,12 @@ if __name__ == '__main__':
 
     else:
         argv = sys.argv[1:]
+        opts = []
         try:
             opts, args = getopt.gnu_getopt(argv, "csar:w:e:p:zx:hu:q:v")
 
         except:
-            print("Error")
+            print("Did not understand argument")
 
         for opt, arg in opts:
             match opt:
