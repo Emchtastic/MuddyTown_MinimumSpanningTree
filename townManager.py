@@ -128,7 +128,7 @@ Displays town in either standard or alternative format. O(s+b) for alternative, 
 def printTown(town, printFormat=1):
     match printFormat:
         case 1:
-            print("\"" + town.name + "\"")
+            print("\"" + town.name.replace("\"", "") + "\"")
             for street in town.streets:
                 print(str(street.cost) + ",\"" + street.house1 + "\",\"" + street.house2 + "\"")
         case 2:

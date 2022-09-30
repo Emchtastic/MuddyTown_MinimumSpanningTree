@@ -14,10 +14,6 @@ currentPavingPlan = []
 if __name__ == '__main__':
     if len(sys.argv) < 2:
         townManager.printTown(town)
-        fileName = "planZ.txt"
-        graph = Graph(town.numHouses)
-        graph.createGraph(town.houses, town.streets)
-        graph.primTree(town.numHouses, town.houses, fileName)
 
     else:
         argv = sys.argv[1:]
