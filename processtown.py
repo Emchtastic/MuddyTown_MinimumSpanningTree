@@ -32,10 +32,12 @@ if __name__ == '__main__':
             match opt:
                 case '-c':  # Generate random town and make it current
                     town = townManager.generateTown()
-                case '-s':  # Display town in standard format
+                case '-s':  # Display town in standard format and change current format to standard
                     townManager.printTown(town)
-                case '-a':  # Display town in alternate format
+                    townManager.standardFormat = True
+                case '-a':  # Display town in alternate format and change current format to alternate
                     townManager.printTown(town, 2)
+                    townManager.standardFormat = False
                 case '-z':  # Display current paving plan stored
                     if not currentPavingPlan:
                         print("No current paving plan uploaded")
@@ -46,10 +48,6 @@ if __name__ == '__main__':
                     townManager.readTown(town, fileName)
                 case '-w':  # Write current town data to file towndatafile using the current format
                     fileName = arg
-                    townManager.writeTown(town, fileName)
-                case '-q':  # Write current town data to file towndatafile using the alternate format
-                    fileName = arg
-                    townManager.standardFormat = False
                     townManager.writeTown(town, fileName)
                 case '-e':  # Read and evaluate a paving plan for the current town from file pavingplanfile
                     fileName = arg
@@ -72,12 +70,11 @@ if __name__ == '__main__':
                     print("Syntax: Python processtown.py [-option [parameter]]\n")
                     print("  options:\n")
                     print("       c   Generate random town and make it current\n")
-                    print("       s   Display town in standard format\n")
-                    print("       a   Display town in alternate format\n")
+                    print("       s   Display town in standard format and change current format to standard\n")
+                    print("       a   Display town in alternate format and change current format to alternate\n")
                     print("       z   Display current paving plan stored\n")
                     print("       r   Replace current town with data read from towndatafile\n")
-                    print("       w   Write current town data to file towndatafile using the standard format\n")
-                    print("       q   Write current town data to file towndatafile using the alternate format\n")
+                    print("       w   Write current town data to file towndatafile using the current format (standard = default until alternate town data displayed)\n")
                     print("       e   Read and evaluate a paving plan for the current town from file pavingplanfile\n")
                     print("       x   Read a paving plan from pavingplanfile and store\n")
                     print("       u   Write currently stored paving plan to file pavingplanfile\n")

@@ -10,12 +10,11 @@ processtown.py - This class is the driver for the program. This class utlizies g
 Syntax: Python processtown.py [-option [parameter]]
 options:
     -c                      Generate random town and make it current
-    -s                      Display town in standard format
-    -a                      Display town in alternate format
+    -s                      Display town in standard format and change current format to standard
+    -a                      Display town in alternate format and change current format to alternate
     -z                      Display current paving plan stored
     -r [towndatafile]       Replace current town with data read from towndatafile
-    -w [towndatafile]       Write current town data to file towndatafile using the standard format
-    -q [towndatafile]       Write current town data to file towndatafile using the alternate format
+    -w [towndatafile]       Write current town data to file towndatafile using the current format (standard = default)
     -e [pavingplanfile]     Read and evaluate a paving plan for the current town from file pavingplanfile
     -x [pavingplanfile]     Read a paving plan from pavingplanfile and store
     -u [pavingplanfile]     Write currently stored paving plan to file pavingplanfile
