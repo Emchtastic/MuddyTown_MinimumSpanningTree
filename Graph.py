@@ -77,8 +77,9 @@ class Graph():
             for house in pavedHouses:
                 if house[1] == False:
                     print("Connected = no")
-                    return
+                    return False
             print("Connected = yes")
+            return True
 
         else:
             townManager.minimumCost = planMinCost

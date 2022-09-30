@@ -1,11 +1,27 @@
 Course: CS 4050 Algorithms and Algorithm Analysis Fall 2022
 Student: Alex Emch
 Project: Muddy Town
+Program Language/Version: Python 3.10 - needed for match-case statements
 
 Scope: This program writes/reads town and paving data to be analyzed for connectivity, paving coverage, and paving cost
 
 How to use:
-processtown.py - This class is the driver for the program.
+processtown.py - This class is the driver for the program. This class utlizies getopt().gnu_getopt commands for Python
+Syntax: Python processtown.py [-option [parameter]]
+options:
+    -c                      Generate random town and make it current
+    -s                      Display town in standard format
+    -a                      Display town in alternate format
+    -z                      Display current paving plan stored
+    -r [towndatafile]       Replace current town with data read from towndatafile
+    -w [towndatafile]       Write current town data to file towndatafile using the standard format
+    -q [towndatafile]       Write current town data to file towndatafile using the alternate format
+    -e [pavingplanfile]     Read and evaluate a paving plan for the current town from file pavingplanfile
+    -x [pavingplanfile]     Read a paving plan from pavingplanfile and store
+    -u [pavingplanfile]     Write currently stored paving plan to file pavingplanfile
+    -p [pavingplanfile]     Write an optimal cost paving plan for the current town to file pavingplanfile
+    -v                      show version and student
+    -h                      help
 
 Python Classes:
 -Town.py: This is an object class used to construct town objects. This object keeps track of the streets in the town as well as house names
@@ -22,5 +38,4 @@ Python Classes:
 
 Other files:
 -houseNames.txt: A large list of random street names that this program utilizes to randomly create house names
--planB.txt & planC.txt: two test case paving plans to test reading, storing, and checking
--town.txt: test case town to check against planC and planB
+-MiniTown.txt: test case/default town
