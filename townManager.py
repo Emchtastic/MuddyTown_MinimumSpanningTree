@@ -333,8 +333,7 @@ def generateTown():
         randomNumbers.append(num)
 
     # Utilized random int just to make sure that a town of 1 or 2 wasn't created
-    numberOfHouses = random.randint(10, 50)
-    town.numHouses = numberOfHouses
+    town.numHouses = random.randint(10, 50)
 
     for i in range(town.numHouses):
         name = str(random.randint(1, 9999)) + " " + random.choice(houseNames).capitalize() + " " + random.choice(
